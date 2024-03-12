@@ -47,18 +47,48 @@
   ; Car queue, if not = v or if all nodes have been visited (queue is empty) return empty list.
   (letrec ((initialise (lambda (g src dest)
                          (let ((queue (list (list src))))
-                           (while g sec dest queue)
+                           (while g src dest queue)
                          )
 
                       )
            )
 
+           (get-node-list (lambda (g node)
+                            (let* ((elem (assoc node g))
+                                   (node-list (car (cdr elem)))
+                                  )
+                              node-list
+                            )
+                            
+                          )
+
+           )
+
            (while (lambda (g src dest queue)
-                    (let* ((path (car queue))
+                    (let* ((queue-pop (car queue))
+                           (new-queue (cdr queue))
+                           (path queue-pop)
+                           (node (list-ref queue-pop (- (length queue-pop) 1)))
+                          )
 
-                           )
+                      (if (= node dest)
+                          path
 
-
+                          (let* ((node-list (get-node-list g node))
+                                 (node-list-len (length node-list))
+                                )
+                            (do ((i 0 (+ i 1)))
+                              ((>= i node-list-len) (while g src dest new-queue))
+                              (let ((new-path (append path (list adj))))
+                                (begin
+                                  (set! node-list (cdr node-list))
+                                  (set! new-queue (append new-queue new-path))
+                                  )
+                                )
+                              )
+                            )
+   
+                      ) 
 
 
                     )
