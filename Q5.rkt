@@ -45,17 +45,29 @@
   ; Insert node u into queue (list, we can append to insert to last, and car for popping)
   ; Node u's neighbours are placed into queue (appended)
   ; Car queue, if not = v or if all nodes have been visited (queue is empty) return empty list.
-  (letrec ((initialise (lambda (g u v)
-                         (let ((queue '()) (path '()))
-                           (begin
-                             (append path u)
-                             (append queue path)
-                             queue
-                           )
+  (letrec ((initialise (lambda (g src dest)
+                         (let ((queue (list (list src))))
+                           (while g sec dest queue)
                          )
 
                       )
            )
+
+           (while (lambda (g src dest queue)
+                    (let* ((path (car queue))
+
+                           )
+
+
+
+
+                    )
+
+
+                    
+                  )
+           )
+           
           )
 
     (initialise g u v)
@@ -74,4 +86,4 @@
 ;(make-graph-n 5)
 ;(add-vertex '((1 (2 3)) (2 (1)) (3 (1))))
 ; (add-edge '((1 (2 3)) (2 (1)) (3 (1))) 3 2)
-(find-path '()
+(find-path '((1 (2 3 4)) (2 (5 6)) (5 (9 10)) (7 (11 12))) 1 11)
