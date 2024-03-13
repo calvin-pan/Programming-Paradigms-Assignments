@@ -40,11 +40,8 @@
 
 ; finds a path and returns it as a list of vertices from u to v, if there is a path from u to v. It returns an empty list if there is no path from u to v.
 ; use BFS
+;Reference: https://stackoverflow.com/questions/8922060/how-to-trace-the-path-in-a-breadth-first-search
 (define (find-path g u v)
-  ; need list that holds visited nodes.
-  ; Insert node u into queue (list, we can append to insert to last, and car for popping)
-  ; Node u's neighbours are placed into queue (appended)
-  ; Car queue, if not = v or if all nodes have been visited (queue is empty) return empty list.
   (letrec ((initialise (lambda (g src dest)
                          (let ((queue (list (list src))))
                            (while g src dest queue)
@@ -52,60 +49,57 @@
 
                       )
            )
-
-           (get-node-list (lambda (g node)
-                            (let* ((elem (assoc node g))
-                                   (node-list (car (cdr elem)))
-                                  )
-                              node-list
+           ; Helper function that returns the adjacency list of the node. Returns an empty list if the node has no adjacent nodes.
+           (get-node-list (lambda (g node) 
+                            (if (equal? (assoc node g) #f)
+                                '()
+                                (let* ((elem (assoc node g))
+                                       (node-list (car (cdr elem)))
+                                       )
+                                  node-list
+                                )
                             )
-                            
                           )
-
            )
 
            (while (lambda (g src dest queue)
-                    (let* ((queue-pop (car queue))
-                           (new-queue (cdr queue))
-                           (path queue-pop)
-                           (node (list-ref queue-pop (- (length queue-pop) 1)))
+                    (if (null? queue) ; If the queue is null, then there is no path. 
+                        '()
+                        (let* ((queue-pop (car queue))
+                               (new-queue (cdr queue))
+                               (path queue-pop)
+                               (node (list-ref queue-pop (- (length queue-pop) 1)))
+                               )
+
+                          (if (= node dest)
+                              path
+
+                              (let* ((node-list (get-node-list g node))
+                                     (node-list-len (length node-list))
+                                     )
+                                (if (= node-list-len 0)
+                                    (while g src dest new-queue)
+                                    (do ((i 0 (+ i 1))) ; Iterate over the node's adjacency list. 
+                                      ((>= i node-list-len) (while g src dest new-queue))
+                                      (let* ((adj (car node-list))
+                                             (new-path (append path (list adj))) ;Append each adjacent node to the current path in a new path.
+                                             )
+                                        (begin
+                                          (set! node-list (cdr node-list)) 
+                                          (set! new-queue (append new-queue (list new-path))) ; Append the new path to the queue.
+                                          )
+                                        )
+                                      )
+                                    )
+                                )
+                              ) 
                           )
-
-                      (if (= node dest)
-                          path
-
-                          (let* ((node-list (get-node-list g node))
-                                 (node-list-len (length node-list))
-                                )
-                            (do ((i 0 (+ i 1)))
-                              ((>= i node-list-len) (while g src dest new-queue))
-                              (let ((new-path (append path (list adj))))
-                                (begin
-                                  (set! node-list (cdr node-list))
-                                  (set! new-queue (append new-queue new-path))
-                                  )
-                                )
-                              )
-                            )
-   
-                      ) 
-
-
-                    )
-
-
-                    
+                    )                
                   )
-           )
-           
+           )      
           )
-
     (initialise g u v)
   )
-
-
-  
-
 )
 
 
@@ -116,4 +110,5 @@
 ;(make-graph-n 5)
 ;(add-vertex '((1 (2 3)) (2 (1)) (3 (1))))
 ; (add-edge '((1 (2 3)) (2 (1)) (3 (1))) 3 2)
-(find-path '((1 (2 3 4)) (2 (5 6)) (5 (9 10)) (7 (11 12))) 1 11)
+(find-path '((1 (2 3 4)) (2 (5 6)) (5 (9 10)) (4 (7 8)) (7 (11 12))) 1 11)
+(find-path (make-graph-n 11) 1 11)
