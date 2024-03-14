@@ -40,7 +40,6 @@
 
 ; finds a path and returns it as a list of vertices from u to v, if there is a path from u to v. It returns an empty list if there is no path from u to v.
 ; use BFS
-;Reference: https://stackoverflow.com/questions/8922060/how-to-trace-the-path-in-a-breadth-first-search
 (define (find-path g u v)
   (letrec ((initialise (lambda (g src dest)
                          (let ((queue (list (list src))))
