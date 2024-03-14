@@ -8,9 +8,9 @@
 
 ; Creates a graph with n nodes
 (define (make-graph-n n)
-  (let recurse ((i n) (L make-graph))
-    (if (<= i 1)
-        L
+  (let recurse ((i n) (L '()))
+    (if (< i 0)
+        (reverse L)
         (recurse (- i 1) (append L (list (list i (list)))))
     )
   )
@@ -104,11 +104,38 @@
 
 
 ; returns the list of pairs of vertices in the graph.
+(define (edges g)
+  (letrec ((while (lambda (g pairs)
+                    (if (null? g)
+                        pairs
+                        (let* ((elem (car g))
+                               (node (car elem))
+                               (adj-list (car (cdr elem)))
+                               (adj-list-len (length adj-list))
+                               (new-pairs pairs)
+                              )
+                          
+                          (do ((i 0 (+ i 1)))
+                            ((>= i adj-list-len) (while (cdr g) new-pairs))
+                            (set! new-pairs (append new-pairs (list (cons node (car adj-list)))))
+                            (set! adj-list (cdr adj-list))
+                          )
+                          
+                        )
+                    )
+                  )
+           )
+          )
+          
+    (while g '())
+  )
+)
 
-
-;make-graph
-;(make-graph-n 5)
-;(add-vertex '((1 (2 3)) (2 (1)) (3 (1))))
-; (add-edge '((1 (2 3)) (2 (1)) (3 (1))) 3 2)
+make-graph
+(make-graph-n 5)
+(add-vertex '((1 (2 3)) (2 (1)) (3 (1))))
+(add-edge '((1 (2 3)) (2 (1)) (3 (1))) 3 2)
 (find-path '((1 (2 3 4)) (2 (5 6)) (5 (9 10)) (4 (7 8)) (7 (11 12))) 1 11)
 (find-path (make-graph-n 11) 1 11)
+(edges '((1 (2 3 4)) (2 (5 6)) (5 (9 10)) (4 (7 8)) (7 (11 12))))
+(edges (make-graph-n 5))
