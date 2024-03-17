@@ -12,4 +12,5 @@
   
   (filter hidden? lst))
 
+(display "(hidden-words “subdermatoglyphic”, '(“set”, “graphic”, “drama”, “toy”, “brag”)) ==> '")
 (display (hidden-words "subdermatoglyphic" '("set" "graphic" "drama" "toy" "brag")))

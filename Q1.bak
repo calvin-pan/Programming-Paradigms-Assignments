@@ -8,7 +8,11 @@
            (list (/(round(*(/(+ (- b)(sqrt discriminant))(* 2 a)) 1000))1000)))
           (else '()))))
 
-
-(solve-quadratic 4 5 -10)
-(solve-quadratic 1 -2 1)
-(solve-quadratic 3 2 1)
+(display "(solve-quadratic 4 5 -10) ==> '")
+(display (solve-quadratic 4 5 -10))
+(newline)
+(display "(solve-quadratic 1 -2 1) ==> '")
+(display (solve-quadratic 1 -2 1))
+(newline)
+(display "(solve-quadratic 3 2 1) ==> '")
+(display (solve-quadratic 3 2 1))

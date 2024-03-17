@@ -1,5 +1,7 @@
 #lang racket
 
+; This function establishes heap sort.
+
 (define (heap-sort vec)
   (define (heapify vec n i)
     (let* ((largest i)
@@ -35,7 +37,25 @@
   (sort vec))
 
 (display (heap-sort #(10 18 3 22 9 31 45 28))) ; Output: #(3 9 10 18 22 28 31 45)
+(newline)
 
+; This function establishes insertion sort.
+
+(define (insertion-sort vec)
+  (define (insert val vec)
+    (cond ((null? vec) (list val))
+          ((<= val (car vec)) (cons val vec))
+          (else (cons (car vec) (insert val (cdr vec))))))
+  
+  (define (insertion-sort-helper vec sorted)
+    (if (null? vec)
+        sorted
+        (insertion-sort-helper (cdr vec) (insert (car vec) sorted))))
+  
+  (apply vector (insertion-sort-helper (vector->list vec) '())))
+
+;; Example usage:
+(display (insertion-sort '#(10 18 3 22 9 31 45 28)))
 
 
 

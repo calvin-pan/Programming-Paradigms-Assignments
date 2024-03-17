@@ -1,5 +1,11 @@
 #lang racket
 
+; This function takes three real numbers:
+; The first number is in the sequence
+; The second number is the ratio
+; The third number is the number of numbers in the sequence
+; From this, the function will return a list of numbers that is the geometric sequence that is created from these numbers.
+
 (define (geometric-sequence-loop first-number ratio n)
   (let ((result '()))
     (do ((i 0 (+ i 1)))
