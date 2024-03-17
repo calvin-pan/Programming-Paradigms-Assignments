@@ -1,0 +1,16 @@
+#lang racket
+
+;; (define (stable-marriage maleList femaleList)
+;;   (let ((finalList '()))
+;;     ))
+
+(define (constructMales maleList)
+  (if ((= (length maleList) 0) maleList)
+   (cons (car maleList))
+   (constructMales (cdr maleList))))
+
+(constructMales '(("Jack". ("Jane" "Amanda" "Kelly")) ("John". ("Amanda" "Jane" "Kelly")) ("Mike". ("Amanda" "Jane" "Kelly"))))
+
+;; (stable-marriage
+;; '(("Jack". ("Jane" "Amanda" "Kelly")) ("John". ("Amanda" "Jane" "Kelly")) ("Mike". ("Amanda" "Jane" "Kelly")))
+;; '( ("Jane". ("Mike" "Jack" "John")) ("Amanda". ("John" "Mike" "Jack")) ("Kelly". ("Mike" "John" "Jack"))))
