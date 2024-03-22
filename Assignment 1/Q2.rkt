@@ -1,6 +1,6 @@
 #lang racket
 
-; This function takes a string and a list of strings and finds all the strings in the list of strings that are hidden in the first string.
+; This function takes a string and a list of strings and finds all the strings in the list of strings that are hidden in the string.
 
 (define (hidden-words str lst)
   (define (hidden? word)

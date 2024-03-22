@@ -17,15 +17,11 @@
           (vector-set! vec largest temp)
           (heapify vec n largest)))))
 
-  ; This function builds the heap.
-
   (define (build-heap vec)
     (let ((n (vector-length vec)))
       (do ((i (quotient n 2) (- i 1)))
           ((< i 0) vec)
         (heapify vec n i))))
-
-  ; This function sorts the heap.
 
   (define (sort vec)
     (let ((mutable-vec (vector-copy vec))

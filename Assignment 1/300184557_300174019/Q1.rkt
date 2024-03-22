@@ -1,6 +1,6 @@
 #lang racket
 
-; This function takes three real numbers that represent the coefficients a, b, and c of a quadratic equation and returns a list of its roots.
+; This function takes three real numbers that represent the coefficients of a quadratic equation and returns a list of its roots.
 ; It uses the quadratic formula to calculate the roots.
 
 (define(solve-quadratic a b c)
